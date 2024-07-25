@@ -1,0 +1,48 @@
+// reduxSetup.js
+
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+
+// Slice definition
+const userSlice = createSlice({
+  name: 'user',
+  initialState: { name: '', age: 0 },
+  reducers: {
+    setName: (state, action) => {
+      state.name = action.payload;
+    },
+    setAge: (state, action) => {
+      state.age = action.payload;
+    },
+  },
+});
+
+const anotherSlice = createSlice({
+  name: 'another',
+  initialState: { data: [] },
+  reducers: {
+    setData: (state, action) => {
+      state.data = action.payload;
+    },
+  },
+});
+
+// Store configuration
+const store = configureStore({
+  reducer: {
+    user: userSlice.reducer,
+    another: anotherSlice.reducer,
+  },
+  // Add any middleware or devTools setup if necessary
+});
+
+// Action creators
+export const { setName, setAge } = userSlice.actions;
+export const { setData } = anotherSlice.actions;
+
+// Selectors
+export const selectUserName = (state) => state.user.name;
+export const selectUserAge = (state) => state.user.age;
+export const selectData = (state) => state.another.data;
+
+// Export the store
+export default store;
